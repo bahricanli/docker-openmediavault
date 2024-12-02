@@ -11,6 +11,8 @@ RUN wget --quiet --output-document=- https://packages.openmediavault.org/public/
 # Add the OpenMediaVault repository
 COPY openmediavault.list /etc/apt/sources.list.d/
 
+COPY omv-initsystem /usr/sbin/omv-initsystem
+
 # Fix resolvconf issues with Docker
 RUN echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections
 
@@ -37,7 +39,7 @@ RUN chmod +x /usr/sbin/sleep.sh
 COPY fake-shared-folders.sh /usr/sbin/fake-shared-folders.sh
 RUN chmod +x /usr/sbin/fake-shared-folders.sh
 
-EXPOSE 8080:80 8443:443
+EXPOSE map[21/tcp:{} 443/tcp:{} 445/tcp:{} 80/tcp:{}]
 
 VOLUME /data
 
