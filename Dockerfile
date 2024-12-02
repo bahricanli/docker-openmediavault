@@ -11,14 +11,12 @@ RUN wget --quiet --output-document=- https://packages.openmediavault.org/public/
 # Add the OpenMediaVault repository
 COPY openmediavault.list /etc/apt/sources.list.d/
 
-COPY omv-initsystem /usr/sbin/omv-initsystem
-
 # Fix resolvconf issues with Docker
 RUN echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-selections
 
 
 # Install OpenMediaVault packages and dependencies
-RUN apt-get update -y; apt-get install nano openmediavault-keyring postfix locales initscripts -y --force-yes --allow-unauthenticated
+RUN apt-get update -y; apt-get install nano openmediavault-keyring postfix locales python -y --force-yes --allow-unauthenticated
 
 RUN apt-get update -y; apt-get --yes --auto-remove --show-upgraded \
     --allow-downgrades --allow-change-held-packages \
@@ -26,6 +24,11 @@ RUN apt-get update -y; apt-get --yes --auto-remove --show-upgraded \
     --option DPkg::Options::="--force-confdef" \
     --option DPkg::Options::="--force-confold" \
     install openmediavault
+
+COPY systemctl3.py /usr/bin/systemctl
+RUN chmod +x /usr/bin/systemctl
+
+CMD ["/usr/bin/systemctl"]
 
 # We need to make sure rrdcached uses /data for it's data
 COPY defaults/rrdcached /etc/default
@@ -39,9 +42,11 @@ RUN chmod +x /usr/sbin/sleep.sh
 COPY fake-shared-folders.sh /usr/sbin/fake-shared-folders.sh
 RUN chmod +x /usr/sbin/fake-shared-folders.sh
 
-EXPOSE map[21/tcp:{} 443/tcp:{} 445/tcp:{} 80/tcp:{}]
+EXPOSE 21:21 443:443 445:445 80:80
 
 VOLUME /data
+
+COPY data-startup.sh /data/startup.sh
 
 SHELL [ "/bin/bash", "-c" ]
 ENTRYPOINT /usr/sbin/omv-startup
