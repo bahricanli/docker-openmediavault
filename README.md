@@ -1,4 +1,4 @@
-[![](https://images.microbadger.com/badges/image/bahricanli/openmediavault.svg)](https://microbadger.com/images/bahricanli/openmediavault "Get your own image badge on microbadger.com") [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+[![](https://images.microbadger.com/badges/image/bahricanli/openmediavault.svg)](https://microbadger.com/images/bahricanli/openmediavault "Get your own image badge on microbadger.com") 
 
 # TO BUILD FOR RPI USE THIS ON YOUR HOST SYSTEM
 
