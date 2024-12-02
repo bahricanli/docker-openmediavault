@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVICES="openmediavault php8.2-fpm rrdcached sudo anacron ntp openmediavault-engined cron postfix nginx collectd rc.local"
+SERVICES="php8.2-fpm ngnix openmediavault-engined postfix cron rrdcached anacron collectd"
 
 for EACH in ${SERVICES}; do
     echo "enable ${EACH}"

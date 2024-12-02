@@ -16,7 +16,7 @@ RUN echo "resolvconf resolvconf/linkify-resolvconf boolean false" | debconf-set-
 
 
 # Install OpenMediaVault packages and dependencies
-RUN apt-get update -y; apt-get install nano openmediavault-keyring postfix locales python -y --force-yes --allow-unauthenticated
+RUN apt-get update -y; apt-get install nano openmediavault-keyring postfix locales python-is-python3 -y --force-yes --allow-unauthenticated
 
 RUN apt-get update -y; apt-get --yes --auto-remove --show-upgraded \
     --allow-downgrades --allow-change-held-packages \
